@@ -1,13 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import HomeStyled, { Btn } from "./HomeStyled";
 
 const Home = () => {
   const navigate = useNavigate();
   return (
-    <div>
-      <button onClick={() => navigate("/contact")}>firecontact</button>
-      <button onClick={() => navigate("/tasks")}>tasktracker</button>
-    </div>
+    <HomeStyled>
+      <Btn onClick={() => navigate("/contact")}>Fire Contact</Btn>
+      <Btn onClick={() => navigate("/tasks")}>Task Tracker</Btn>
+    </HomeStyled>
   );
 };
 

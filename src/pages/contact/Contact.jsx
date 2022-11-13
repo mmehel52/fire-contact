@@ -10,10 +10,20 @@ import {
   set,
   update,
 } from "firebase/database";
-import { useNavigate } from "react-router-dom";
+import ContactStyled, {
+  Btn,
+  FormTable,
+  Form,
+  Input,
+  InputPhone,
+  Selc,
+  Title1,
+  Table,
+} from "./ContactStyled";
+import { TiDelete } from "react-icons/ti";
+import { BiEditAlt } from "react-icons/bi";
 
 const ContactPage = () => {
-  const navigate = useNavigate();
   const [contact, setContact] = useState({
     name: "",
     phone: "",
@@ -35,10 +45,12 @@ const ContactPage = () => {
       });
       setContact({ name: "", phone: "", gender: "n/a" });
     } else {
-      const db = getDatabase(firebase);
-      const userRef = ref(db, "contact");
-      set(push(userRef), contact);
-      setContact({ name: "", phone: "", gender: "n/a" });
+      if (contact.name && contact.phone) {
+        const db = getDatabase(firebase);
+        const userRef = ref(db, "contact");
+        set(push(userRef), contact);
+        setContact({ name: "", phone: "", gender: "n/a" });
+      }
     }
   };
 
@@ -65,90 +77,100 @@ const ContactPage = () => {
     setContact({ id, name, phone, gender });
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          onChange={handleChange}
-          value={contact.name}
-        />
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone"
-          onChange={handleChange}
-          value={contact.phone}
-        />
-        <select
-          name="gender"
-          onChange={handleChange}
-          defaultValue="n/a"
-          value={contact.gender}
-        >
-          <option disabled value="n/a">
-            Gender
-          </option>
-          <option value="m">Male</option>
-          <option value="f">Female</option>
-          <option value="o">Other</option>
-        </select>
-        <button type="submit">{contact.id ? "Update" : "Add"}</button>
-        {contact.id && (
-          <button
-            type="button"
-            onClick={() => {
-              setContact({ name: "", phone: "", gender: "n/a" });
-            }}
-          >
-            Cancel
-          </button>
-        )}
-      </form>
+    <ContactStyled>
+      <FormTable>
+        <div>
+          <Title1>ADD CONTACT</Title1>
+          <Form onSubmit={handleSubmit}>
+            <Input
+              type="text"
+              name="name"
+              placeholder="Name"
+              onChange={handleChange}
+              value={contact.name}
+            />
+            <InputPhone
+              type="text"
+              name="phone"
+              placeholder="Phone"
+              onChange={handleChange}
+              value={contact.phone}
+            />
+            <Selc
+              name="gender"
+              onChange={handleChange}
+              defaultValue="n/a"
+              value={contact.gender}
+            >
+              <option selected value="n/a">
+                Gender
+              </option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </Selc>
+            <Btn type="submit">{contact.id ? "Update" : "Add"}</Btn>
+            {contact.id && (
+              <Btn
+                type="Button"
+                onClick={() => {
+                  setContact({ name: "", phone: "", gender: "n/a" });
+                }}
+              >
+                Cancel
+              </Btn>
+            )}
+          </Form>
+        </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Gender</th>
-            <th>Delete</th>
-            <th>Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {contactList.map((contact) => (
-            <tr key={contact.id}>
-              <td>{contact.name}</td>
-              <td>{contact.phone}</td>
-              <td>{contact.gender}</td>
-              <td>
-                <button onClick={() => deleteContact(contact.id)}>
-                  Delete
-                </button>
-              </td>
-              <td>
-                <button
-                  onClick={() => {
-                    handleEdit(
-                      contact.id,
-                      contact.name,
-                      contact.phone,
-                      contact.gender
-                    );
-                  }}
-                >
-                  Edit
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <button onClick={() => navigate(-1)}>Back</button>
-    </div>
+        <div>
+          <Title1>CONTACTS</Title1>
+          <Table>
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Phone Number</th>
+                <th>Gender</th>
+                <th>Delete</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+              {contactList.map((contact) => (
+                <tr key={contact.id}>
+                  <td>{contact.name}</td>
+                  <td>{contact.phone}</td>
+                  <td>{contact.gender}</td>
+                  <td>
+                    <TiDelete
+                      onClick={() => deleteContact(contact.id)}
+                      style={{ color: "red", fontSize: "25px" }}
+                    >
+                      Delete
+                    </TiDelete>
+                  </td>
+                  <td>
+                    <BiEditAlt
+                      style={{ color: "blue", fontSize: "20px" }}
+                      onClick={() => {
+                        handleEdit(
+                          contact.id,
+                          contact.name,
+                          contact.phone,
+                          contact.gender
+                        );
+                      }}
+                    >
+                      Edit
+                    </BiEditAlt>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      </FormTable>
+    </ContactStyled>
   );
 };
 export default ContactPage;
