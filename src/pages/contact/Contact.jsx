@@ -136,36 +136,40 @@ const ContactPage = () => {
               </tr>
             </thead>
             <tbody>
-              {contactList.map((contact) => (
-                <tr key={contact.id}>
-                  <td>{contact.name}</td>
-                  <td>{contact.phone}</td>
-                  <td>{contact.gender}</td>
-                  <td>
-                    <TiDelete
-                      onClick={() => deleteContact(contact.id)}
-                      style={{ color: "red", fontSize: "25px" }}
-                    >
-                      Delete
-                    </TiDelete>
-                  </td>
-                  <td>
-                    <BiEditAlt
-                      style={{ color: "blue", fontSize: "20px" }}
-                      onClick={() => {
-                        handleEdit(
-                          contact.id,
-                          contact.name,
-                          contact.phone,
-                          contact.gender
-                        );
-                      }}
-                    >
-                      Edit
-                    </BiEditAlt>
-                  </td>
-                </tr>
-              ))}
+              {contactList.length == 0 ? (
+                <td style={{ textAlign: "center" }}>Nothing Found</td>
+              ) : (
+                contactList.map((contact) => (
+                  <tr key={contact.id}>
+                    <td>{contact.name}</td>
+                    <td>{contact.phone}</td>
+                    <td>{contact.gender}</td>
+                    <td>
+                      <TiDelete
+                        onClick={() => deleteContact(contact.id)}
+                        style={{ color: "red", fontSize: "25px" }}
+                      >
+                        Delete
+                      </TiDelete>
+                    </td>
+                    <td>
+                      <BiEditAlt
+                        style={{ color: "blue", fontSize: "20px" }}
+                        onClick={() => {
+                          handleEdit(
+                            contact.id,
+                            contact.name,
+                            contact.phone,
+                            contact.gender
+                          );
+                        }}
+                      >
+                        Edit
+                      </BiEditAlt>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </Table>
         </div>
