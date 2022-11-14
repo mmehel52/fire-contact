@@ -27,6 +27,7 @@ import TaskStyled, {
 } from "./TaskStyled";
 import { TiDelete } from "react-icons/ti";
 import { TiTick } from "react-icons/ti";
+import { TiTickOutline } from "react-icons/ti";
 import { BiEditAlt } from "react-icons/bi";
 import {
   toastSuccessNotify,
@@ -90,8 +91,12 @@ const TaskTracker = () => {
   const handleEdit = (id, task, date, completed) => {
     setContact({ id, task, date, completed });
   };
-  const handleComplete = (id, task, date, completed) => {
-    setContact({ ...contact, completed });
+  const handleComplete = (id) => {
+    const db = getDatabase(firebase);
+    const userRef = ref(db, "tasks/" + id);
+    update(userRef, {
+      completed: (contact.completed = !contact.completed),
+    });
   };
 
   return (
@@ -128,7 +133,12 @@ const TaskTracker = () => {
 
       <Tasks>
         {taskList.map((contact) => (
-          <Task key={contact.id}>
+          <Task
+            key={contact.id}
+            style={{
+              opacity: contact.completed ? "0.3" : "0.7",
+            }}
+          >
             <TaskDate>
               <Todo>{contact.task}</Todo>
               <Date>{contact.date}</Date>
@@ -147,10 +157,17 @@ const TaskTracker = () => {
                 }}
               />
 
-              <TiTick
-                onClick={() => handleComplete(contact.id)}
-                style={{ color: "green", fontSize: "25px" }}
-              />
+              {contact.completed ? (
+                <TiTick
+                  onClick={() => handleComplete(contact.id)}
+                  style={{ color: "green", fontSize: "25px" }}
+                />
+              ) : (
+                <TiTickOutline
+                  onClick={() => handleComplete(contact.id)}
+                  style={{ color: "green", fontSize: "25px" }}
+                />
+              )}
             </Icons>
           </Task>
         ))}
