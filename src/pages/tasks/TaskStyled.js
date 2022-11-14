@@ -64,6 +64,9 @@ export const Tasks = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  @media (max-width: ${({ theme }) => theme.responsive}) {
+    width: 20rem;
+  }
 `;
 export const Task = styled.div`
   display: flex;

@@ -11,7 +11,7 @@ const ContactStyled = styled.div`
   background-repeat: no-repeat, repeat;
   background-position: center;
   background-size: cover;
-
+  padding-bottom: 30px;
   color: white;
 `;
 export const FormTable = styled.div`
@@ -77,6 +77,9 @@ export const Table = styled.table`
     padding: 8px;
 
     border-bottom: 1px solid #ddd;
+  }
+  @media (max-width: ${({ theme }) => theme.responsive}) {
+    width: 20rem;
   }
 `;
 
