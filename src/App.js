@@ -4,6 +4,7 @@ import { ThemeProvider } from "styled-components";
 import AppRouter from "./router/AppRouter";
 import Nav from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
+import { ToastContainer } from "react-toastify";
 
 const style = {
   colors: {
@@ -21,6 +22,7 @@ function App() {
       <Nav />
       <AppRouter />
       <Footer />
+      <ToastContainer />
     </ThemeProvider>
   );
 }

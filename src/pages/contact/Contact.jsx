@@ -22,7 +22,11 @@ import ContactStyled, {
 } from "./ContactStyled";
 import { TiDelete } from "react-icons/ti";
 import { BiEditAlt } from "react-icons/bi";
-
+import {
+  toastSuccessNotify,
+  toastErrorNotify,
+  toastWarnNotify,
+} from "../../helper/ToastNotify";
 const ContactPage = () => {
   const [contact, setContact] = useState({
     name: "",
@@ -43,13 +47,17 @@ const ContactPage = () => {
         phone: contact.phone,
         gender: contact.gender,
       });
+      toastSuccessNotify("Contact was updated successfully!");
       setContact({ name: "", phone: "", gender: "n/a" });
     } else {
-      if (contact.name && contact.phone) {
+      if (contact.name && contact.phone && contact.gender) {
         const db = getDatabase(firebase);
         const userRef = ref(db, "contact");
         set(push(userRef), contact);
+        toastSuccessNotify("Contact was added successfully!");
         setContact({ name: "", phone: "", gender: "n/a" });
+      } else {
+        toastErrorNotify("Enter name,phone and select gender ");
       }
     }
   };
@@ -72,10 +80,12 @@ const ContactPage = () => {
     const db = getDatabase(firebase);
     const userRef = ref(db, "contact/" + id);
     remove(userRef);
+    toastWarnNotify("Contact was deleted");
   };
   const handleEdit = (id, name, phone, gender) => {
     setContact({ id, name, phone, gender });
   };
+
   return (
     <ContactStyled>
       <FormTable>
