@@ -18,5 +18,10 @@ I added the Firebase Authentication JS codes in my firebase.js file and initiali
 Step 4 : I used get random login background image from https://picsum.photos/1600/900
 
 Step 5: I used styled-components as CSS.
+## Author
+👤 Mustafa MEHEL
+
+
+Github: [mmehel52](https://github.com/mmehel52)
 
 
