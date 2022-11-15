@@ -7,7 +7,10 @@ const HomeStyled = styled.div`
   justify-content: center;
   gap: 15px;
   min-height: 77vh;
-  background-color: ${({ theme }) => theme.colors.text};
+  background-image: url("https://picsum.photos/1600/900");
+  background-repeat: no-repeat, repeat;
+  background-position: center;
+  background-size: cover;
   color: white;
 `;
 export const Btn = styled.button`
