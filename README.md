@@ -2,7 +2,7 @@
 [click here to see.](https://mm-firecontact-tasktracker.netlify.app/)
 ## Demo
 
-![aaaaa]()
+![aaaaa](https://github.com/mmehel52/fire-contact/blob/master/Animation.gif)
 
 ## Overview
 
